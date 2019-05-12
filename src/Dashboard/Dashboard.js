@@ -1,59 +1,65 @@
 import React from 'react';
-
-import ExpenseForm from '../ExpenseForm/ExpenseForm'
+import NoteCreateForm from './NoteCreateForm/NoteCreateForm';
+import NoteList from './NoteList/NoteList'
+const uuid = require('uuid');
 
 export default class Dashboard extends React.Component {
     constructor(props){
         super(props);
 
         this.state = {};
-        // Vinicio - this array in here will hold all the expenses for our application
-        this.state.expenses = [];
-        // Vinicio - expenses are going to have main properties
+        // Vinicio - this array in here will hold all the notes for our application
+        this.state.notes = [];
+        // Vinicio - notes are going to have main properties
         // 1 - id
         // 2 - title
-        // 3 - price
+        // 3 - content
     }
 
-    renderExpenses = () => {
+    renderNotes = () => {
         return(
             <ul>
             {
-                this.state.expenses.map(currentExpense => {
-                    return <li key={currentExpense.id}>
-                        {currentExpense.title} : {currentExpense.price}
-                </li>
+                this.state.notes.map(currentNote => {
+                    return <NoteList note={currentNote}
+                    handleRemoveNotes={this.handleRemoveNotes}
+                    />
                 })
             }
             </ul>
-    );
+        );
     };
 
-    handleAddExpense = expense => {
-        // Vinicio - here I'm going to assume that the expense only comes with
+    handleAddNotes = note => {
+        // Vinicio - here I'm going to assume that the note only comes with
         // name and price, and that I use the "back end" to create IDs
         //-------------------------------------------------------------------------
         // BACK END - "Saving this on the DB"
         //-------------------------------------------------------------------------
-        expense.id = Math.random();
-        expense.createdOn = new Date();
+        note.id = uuid.v1();
+        note.createdOn = new Date();
         //-------------------------------------------------------------------------
 
         this.setState((previousState) => {
             // Vinicio - in order to create the new state we create a new arra
             // Vinicio - we do this to follow functional's programming principle of inmutability
             return {
-                expenses: [...previousState.expenses, expense],
+                notes: [...previousState.notes, note],
             }
         });
     };
 
+    handleRemoveNotes = note => {
+        this.setState(previousState => ({
+            note: previousState.notes.filter(currentNote => currentNote.id !== note.id),
+        }));
+    };
 
     render(){
         return(<div>
-            <h2>Expense Dashboard</h2>
-        <ExpenseForm handleAddExpense={this.handleAddExpense}/>
-        { this.renderExpenses() }
+            <h2>Note Dashboard</h2>
+        <NoteCreateForm handleAddNotes={this.handleAddNotes}/>
+        { this.renderNotes() }
     </div>);
     }
 }
