@@ -1,12 +1,12 @@
 import React from 'react';
 
-export default class ExpenseForm extends React.Component {
+export default class NoteCreateForm extends React.Component {
     // Vinicio - no constructor = No State
     constructor(props){
         super(props);
         this.state = {
             title : '',
-            price: 0,
+            content: '',
         };
     }
 
@@ -20,7 +20,7 @@ export default class ExpenseForm extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        this.props.handleAddExpense(this.state);
+        this.props.handleAddNotes(this.state);
     };
 
     render(){
@@ -34,15 +34,15 @@ export default class ExpenseForm extends React.Component {
         placeholder="title"
             />
             <input
-        type="number"
-        name="price"
-        value={this.state.price}
+        type="text"
+        name="content"
+        value={this.state.content}
         onChange={this.handleChange}
-        placeholder="0"
+        placeholder="content"
             />
-            <button type="submit">Create Expense</button>
+            <button type="submit">Create Note</button>
         </form>
 
-    );
+        );
     }
 }
