@@ -41,7 +41,7 @@ export default class Dashboard extends React.Component {
         //-------------------------------------------------------------------------
 
         this.setState((previousState) => {
-            // Vinicio - in order to create the new state we create a new arra
+            // Vinicio - in order to create the new state we create a new array
             // Vinicio - we do this to follow functional's programming principle of inmutability
             return {
                 notes: [...previousState.notes, note],
@@ -51,7 +51,7 @@ export default class Dashboard extends React.Component {
 
     handleRemoveNotes = note => {
         this.setState(previousState => ({
-            note: previousState.notes.filter(currentNote => currentNote.id !== note.id),
+            note: previousState.notes.filter(currentNote => currentNote !== note.id),
         }));
     };
 

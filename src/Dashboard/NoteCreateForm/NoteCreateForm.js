@@ -43,6 +43,6 @@ export default class NoteCreateForm extends React.Component {
             <button type="submit">Create Note</button>
         </form>
 
-    );
+        );
     }
 }
